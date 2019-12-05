@@ -3,7 +3,7 @@ function EnterTheOffice(id, pass)
 {
 	// const rest1 = fetch("https://api.kanye.rest").then( resp => resp.json()).then(data => document.getElementById('areaMessage').value = data.quote);
 	let tmpListMessages;
-	debugger;
+
 	document.getElementById('idUser').disabled = true;
 	document.getElementById('passUser').disabled = true;
 	document.getElementById('areaMessage').value = "";
@@ -11,10 +11,10 @@ function EnterTheOffice(id, pass)
 		.then( resp => resp.json())
 		.then((data) => {
 			flagUser=true;
-			for (let i=0; i<data.length; i++)//TODO затем писать получение сообщения по имени, а не по айди; преобразовать на выводе дату
-			{
-				document.getElementById('areaMessage').value += "От кого: " + data[i].IdSend + " в "+ data[i].Time + "\n" + data[i].TextMessage+ "\n" ;
-			}
+			//for (let i=0; i<data.length; i++)//TODO затем писать получение сообщения по имени, а не по айди; преобразовать на выводе дату
+			//{
+				document.getElementById('areaMessage').value = data ;
+			//}
 		})
 			
 }
@@ -22,7 +22,7 @@ function EnterTheOffice(id, pass)
 function CheckNewMessage(id, pass)
 {
 	let tmpListMessages;
-	debugger;
+
 	if (flagUser == true)
 	{
 		document.getElementById('areaMessage').value = "";
@@ -46,11 +46,12 @@ function ExitTheOffice()
 	document.getElementById('idUser').value = "";
 	document.getElementById('passUser').value = "";
 	document.getElementById('areaMessage').value = "";
+	document.getElementById('idRecip').value = "";
+	document.getElementById('newMessage').value = "";
 }
 
 function AddMessage(idSend, idRecip, textMessage)
 {
-	debugger;
 	if (flagUser == true)
 	{
 		var message = {
@@ -66,9 +67,7 @@ function AddMessage(idSend, idRecip, textMessage)
 		    body: JSON.stringify(message)
 		};
 		fetch('https://localhost:44326/api/WebChat/AddMessage', options);
-		  	// .then(response => response.json())
-     //  		.then(result => alert(JSON.stringify(result, null, 2)))
-		
-		
+		document.getElementById('idRecip').value = "";
+		document.getElementById('newMessage').value = "Сообщение успешно отправлено!";
 	}
 }
