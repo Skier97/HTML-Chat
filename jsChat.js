@@ -50,24 +50,25 @@ function ExitTheOffice()
 
 function AddMessage(idSend, idRecip, textMessage)
 {
-	// debugger;
-	// if (flagUser == true)
-	// {
-	// 	const options = {
-	// 	  method: 'post',
-	// 	  headers: { "Content-type": "application/json; charset=UTF-8" },
-	// 	    body: {
-	// 		  IdSend: idSend,
-	// 		  IdRecip: idRecip,
-	// 		  TextMessage: textMessage,
-	// 		  Time: new Date,
-	// 		  IsRead: false
-	// 		}
-	// 	}
-	// 	fetch('https://localhost:44326/api/WebChat/AddMessage', options)
-	// 	  	.then(response => response.json())
- //      		.then(result => alert(JSON.stringify(result, null, 2)))
+	debugger;
+	if (flagUser == true)
+	{
+		var message = {
+			  IdSend: idSend,
+			  IdRecip: idRecip,
+			  TextMessage: textMessage,
+			  Time: new Date,
+			  IsRead: false
+			};
+		const options = {
+		  method: 'post',
+		  headers: { "Content-type": "application/json" },
+		    body: JSON.stringify(message)
+		};
+		fetch('https://localhost:44326/api/WebChat/AddMessage', options);
+		  	// .then(response => response.json())
+     //  		.then(result => alert(JSON.stringify(result, null, 2)))
 		
 		
-	// }
+	}
 }
