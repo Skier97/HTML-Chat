@@ -32,7 +32,7 @@ body {background: #f69a73;}
   border-radius: 1vw;
   font-family: 'Roboto', sans-serif;
 }
-.form-inner input[type="submit"] {
+.form-inner input[type="button"] {
   margin-top: 4vh;
   background: #f69a73;
   border-bottom: 0.2em solid #d87d56;
