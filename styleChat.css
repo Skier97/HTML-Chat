@@ -19,7 +19,7 @@ body {background: #f69a73;}
   font-family: 'Roboto Slab', sans-serif;
   font-weight: bold;
 }
-.form-inner {padding: 5vw; min-height: 60vh}
+.form-inner {padding: 5vw; min-height: 70vh}
 .form-inner input,
 .form-inner textarea {
   display: block;
@@ -46,4 +46,13 @@ body {background: #f69a73;}
   font-weight: 500;
   font-size: 3vh;
   color: #707981;
+}
+
+#checkMess,
+#doneEnter,
+#doneSend
+{  
+  color: #696969;
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: bold;
 }

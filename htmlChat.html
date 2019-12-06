@@ -28,6 +28,7 @@
 							    <input type="text" placeholder="Id" id="idRecip">
 							    <textarea placeholder="Сообщение..." rows="3" id="newMessage"></textarea>
 							    <input type="button" value="Отправить" onclick="AddMessage(document.getElementById('idUser').value, document.getElementById('idRecip').value, document.getElementById('newMessage').value)">
+							    <h5 id = "doneSend" style="visibility: hidden;">Сообщение успешно отправлено!</h5>
 							  </div>
 							</form>
 						</td>
@@ -37,6 +38,7 @@
 							  	<h3>Ваши сообщения</h3>
 							    <textarea rows="3" id="areaMessage" disabled="true"></textarea>
 							    <input type="button" value="Проверка новых сообщений" onclick="CheckNewMessage(document.getElementById('idUser').value, document.getElementById('passUser').value)">
+							    <h5 id = "checkMess" style="visibility: hidden;">Новых сообщений нет!</h5>
 							  </div>
 							</form>
 						</td>
@@ -45,11 +47,11 @@
 							<form class="decor">
 							  <div class="form-inner">
 							  	<h3>Вход в кабинет</h3>
-							    <input type="text" placeholder="Id" id="idUser">
-							    <input type="password" placeholder="Пароль" id="passUser">
-							    <input type="button" value="Вход" onclick="EnterTheOffice(document.getElementById('idUser').value, document.getElementById('passUser').value)">
-							    <input type="button" value="Выйти" onclick="ExitTheOffice()">
-
+							    <input class = "checkInput" type="text" placeholder="Id" id="idUser">
+							    <input class = "checkInput" type="password" placeholder="Пароль" id="passUser">
+							    <input class = "enter" type="button" value="Вход" onclick="EnterTheOffice(document.getElementById('idUser').value, document.getElementById('passUser').value)" disabled="disabled">
+							    <input type="button" value="Выйти" id = "enter" onclick="ExitTheOffice()">
+							    <h5 id = "doneEnter" style="visibility: hidden;">Вход успешно выполнен!</h5>
 							  </div>
 							</form>
 						</td>

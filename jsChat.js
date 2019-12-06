@@ -1,4 +1,5 @@
 let flagUser = false;
+let nameUser = "";
 function EnterTheOffice(id, pass)
 {
 	// const rest1 = fetch("https://api.kanye.rest").then( resp => resp.json()).then(data => document.getElementById('areaMessage').value = data.quote);
@@ -11,10 +12,18 @@ function EnterTheOffice(id, pass)
 		.then( resp => resp.json())
 		.then((data) => {
 			flagUser=true;
-			//for (let i=0; i<data.length; i++)//TODO затем писать получение сообщения по имени, а не по айди; преобразовать на выводе дату
-			//{
-				document.getElementById('areaMessage').value = data ;
-			//}
+			let i=4;
+
+			document.getElementById('doneEnter').style.visibility = 'visible';
+			var timer = setInterval(function () {
+				i--;
+				
+				if (i == 0) {
+				    document.getElementById('doneEnter').style.visibility = 'hidden';
+				    clearInterval(timer);
+				}
+			}, 1000)
+			nameUser = data;
 		})
 			
 }
@@ -22,21 +31,50 @@ function EnterTheOffice(id, pass)
 function CheckNewMessage(id, pass)
 {
 	let tmpListMessages;
-
 	if (flagUser == true)
 	{
 		document.getElementById('areaMessage').value = "";
 		fetch("https://localhost:44326/api/WebChat/IsUser?id=" + id + "&password=" + pass + "&flagUser=" + flagUser)
 			.then(resp => resp.json())
 			.then((data) => {
-				for (let i=0; i<data.length; i++)//TODO затем писать получение сообщения по имени, а не по айди; преобразовать на выводе дату
+				for (let i=0; i<data.length; i++)
 				{
-					document.getElementById('areaMessage').value += "От кого: " + data[i].IdSend + " в "+ data[i].Time + "\n" + data[i].TextMessage+ "\n" ;
+					var date = data[i].Time.slice(0, 10);
+					var time = data[i].Time.slice(11,16);
+					document.getElementById('areaMessage').value += "От пользователя " + data[i].NameSend + " в "+ time + " " + date + "\n" + data[i].TextMessage+ "\n" ;
+				}
+				if (data.length == 0)
+				{
+					let i=4;
+					document.getElementById('checkMess').style.visibility = 'visible';
+					var timer = setInterval(function () {
+				        i--;
+				        
+				        if (i == 0) {
+				            document.getElementById('checkMess').style.visibility = 'hidden';
+				            clearInterval(timer);
+					        }
+					    }, 1000)
+					
 				}
 			})
+			
 	}
 	
 }
+
+$(document).ready(function(){
+            $('input.checkInput').change(function() {
+                if($('input.checkInput').map(function(index, domElement) {
+                   if ($(domElement).val() !== "")
+                      return domElement;
+                })) {
+                   $("input.enter").attr('disabled','disabled');                
+                } else {
+                   $("input.enter").removeAttr('disabled');
+                }
+                });
+        });
 
 function ExitTheOffice()
 {
@@ -48,6 +86,10 @@ function ExitTheOffice()
 	document.getElementById('areaMessage').value = "";
 	document.getElementById('idRecip').value = "";
 	document.getElementById('newMessage').value = "";
+	document.getElementById('doneEnter').style.visibility = 'hidden';
+	document.getElementById('doneSend').style.visibility = 'hidden';
+	document.getElementById('checkMess').style.visibility = 'hidden';
+	nameUser = "";
 }
 
 function AddMessage(idSend, idRecip, textMessage)
@@ -56,6 +98,7 @@ function AddMessage(idSend, idRecip, textMessage)
 	{
 		var message = {
 			  IdSend: idSend,
+			  NameSend: nameUser,
 			  IdRecip: idRecip,
 			  TextMessage: textMessage,
 			  Time: new Date,
@@ -68,6 +111,15 @@ function AddMessage(idSend, idRecip, textMessage)
 		};
 		fetch('https://localhost:44326/api/WebChat/AddMessage', options);
 		document.getElementById('idRecip').value = "";
-		document.getElementById('newMessage').value = "Сообщение успешно отправлено!";
+		document.getElementById('doneSend').style.visibility = 'visible';
+		let i=4;
+		var timer = setInterval(function () {
+			i--;
+			
+			if (i == 0) {
+			    document.getElementById('doneSend').style.visibility = 'hidden';
+			    clearInterval(timer);
+			}
+		}, 1000)
 	}
 }
