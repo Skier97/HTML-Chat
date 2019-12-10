@@ -47,9 +47,9 @@
 							<form class="decor">
 							  <div class="form-inner">
 							  	<h3>Вход в кабинет</h3>
-							    <input class = "checkInput" type="text" placeholder="Id" id="idUser">
-							    <input class = "checkInput" type="password" placeholder="Пароль" id="passUser">
-							    <input class = "enter" type="button" value="Вход" onclick="EnterTheOffice(document.getElementById('idUser').value, document.getElementById('passUser').value)" disabled="disabled">
+							    <input class = "checkInput" type="text" placeholder="Id" id="idUser" onchange="CheckValid()">
+							    <input class = "checkInput" type="password" placeholder="Пароль" id="passUser" onchange="CheckValid()">
+							    <input class = "enter" type="button" id="idEnter" value="Вход" onclick="EnterTheOffice(document.getElementById('idUser').value, document.getElementById('passUser').value)" disabled="true">
 							    <input type="button" value="Выйти" id = "enter" onclick="ExitTheOffice()">
 							    <h5 id = "doneEnter" style="visibility: hidden;">Вход успешно выполнен!</h5>
 							  </div>

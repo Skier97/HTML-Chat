@@ -63,18 +63,6 @@ function CheckNewMessage(id, pass)
 	
 }
 
-$(document).ready(function(){
-            $('input.checkInput').change(function() {
-                if($('input.checkInput').map(function(index, domElement) {
-                   if ($(domElement).val() !== "")
-                      return domElement;
-                })) {
-                   $("input.enter").attr('disabled','disabled');                
-                } else {
-                   $("input.enter").removeAttr('disabled');
-                }
-                });
-        });
 
 function ExitTheOffice()
 {
@@ -121,5 +109,18 @@ function AddMessage(idSend, idRecip, textMessage)
 			    clearInterval(timer);
 			}
 		}, 1000)
+	}
+}
+
+function CheckValid()
+{
+	debugger;
+	if ((document.getElementById('idUser').value != "")&&(document.getElementById('passUser').value != ""))
+	{
+		document.getElementById('idEnter').removeAttribute("disabled");
+	}
+	else
+	{
+		document.getElementById('idEnter').setAttribute("disabled", "true");
 	}
 }
