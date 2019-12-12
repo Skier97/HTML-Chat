@@ -27,7 +27,7 @@
 							  	<h3>Написать сообщение</h3>
 							    <input type="text" placeholder="Id" id="idRecip">
 							    <textarea placeholder="Сообщение..." rows="3" id="newMessage"></textarea>
-							    <input type="button" value="Отправить" onclick="AddMessage(document.getElementById('idUser').value, document.getElementById('idRecip').value, document.getElementById('newMessage').value)">
+							    <input type="button" value="Отправить" onclick="AddMessage(document.getElementById('idRecip').value, document.getElementById('newMessage').value)">
 							    <h5 id = "doneSend" style="visibility: hidden;">Сообщение успешно отправлено!</h5>
 							  </div>
 							</form>
@@ -37,7 +37,7 @@
 							  <div class="form-inner">
 							  	<h3>Ваши сообщения</h3>
 							    <textarea rows="3" id="areaMessage" disabled="true"></textarea>
-							    <input type="button" value="Проверка новых сообщений" onclick="CheckNewMessage(document.getElementById('idUser').value, document.getElementById('passUser').value)">
+							    <input type="button" value="Проверка новых сообщений" onclick="CheckNewMessage()">
 							    <h5 id = "checkMess" style="visibility: hidden;">Новых сообщений нет!</h5>
 							  </div>
 							</form>
@@ -46,11 +46,11 @@
 						<td style="width: 30%;">
 							<form class="decor">
 							  <div class="form-inner">
-							  	<h3>Вход в кабинет</h3>
-							    <input class = "checkInput" type="text" placeholder="Id" id="idUser" onchange="CheckValid()">
-							    <input class = "checkInput" type="password" placeholder="Пароль" id="passUser" onchange="CheckValid()">
+							  	<h3 id="enterHead">Вход в кабинет</h3>
+							    <input  type="text" placeholder="Id" id="idUser" onchange="CheckValid()">
+							    <input  type="password" placeholder="Пароль" id="passUser" onchange="CheckValid()">
 							    <input class = "enter" type="button" id="idEnter" value="Вход" onclick="EnterTheOffice(document.getElementById('idUser').value, document.getElementById('passUser').value)" disabled="true">
-							    <input type="button" value="Выйти" id = "enter" onclick="ExitTheOffice()">
+							    <input type="button" value="Выйти" id = "idExit" style="visibility: hidden;" onclick="ExitTheOffice()">
 							    <h5 id = "doneEnter" style="visibility: hidden;">Вход успешно выполнен!</h5>
 							  </div>
 							</form>

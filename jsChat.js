@@ -1,5 +1,7 @@
 let flagUser = false;
 let nameUser = "";
+let idUser = 0;
+let passUser = "";
 function EnterTheOffice(id, pass)
 {
 	// const rest1 = fetch("https://api.kanye.rest").then( resp => resp.json()).then(data => document.getElementById('areaMessage').value = data.quote);
@@ -12,6 +14,7 @@ function EnterTheOffice(id, pass)
 		.then( resp => resp.json())
 		.then((data) => {
 			flagUser=true;
+
 			let i=4;
 
 			document.getElementById('doneEnter').style.visibility = 'visible';
@@ -24,17 +27,26 @@ function EnterTheOffice(id, pass)
 				}
 			}, 1000)
 			nameUser = data;
+			idUser = id;
+			passUser = pass;
+			var outText = "<h3>Привет, " + data + "!</h3>";
+			var outElem = document.getElementById('enterHead');
+			outElem.innerHTML = outText;
+			document.getElementById('idUser').style.visibility = 'hidden';
+			document.getElementById('passUser').style.visibility = 'hidden';
+			document.getElementById('idEnter').style.visibility = 'hidden';
+			document.getElementById('idExit').style.visibility = 'visible';
 		})
 			
 }
 
-function CheckNewMessage(id, pass)
+function CheckNewMessage()
 {
 	let tmpListMessages;
 	if (flagUser == true)
 	{
 		document.getElementById('areaMessage').value = "";
-		fetch("https://localhost:44326/api/WebChat/IsUser?id=" + id + "&password=" + pass + "&flagUser=" + flagUser)
+		fetch("https://localhost:44326/api/WebChat/IsUser?id=" + idUser + "&password=" + passUser + "&flagUser=" + flagUser)
 			.then(resp => resp.json())
 			.then((data) => {
 				for (let i=0; i<data.length; i++)
@@ -77,16 +89,25 @@ function ExitTheOffice()
 	document.getElementById('doneEnter').style.visibility = 'hidden';
 	document.getElementById('doneSend').style.visibility = 'hidden';
 	document.getElementById('checkMess').style.visibility = 'hidden';
+	var outText = "<h3>Вход в кабинет</h3>";
+	var outElem = document.getElementById('enterHead');
+	outElem.innerHTML = outText;
+	document.getElementById('idUser').style.visibility = 'visible';
+	document.getElementById('passUser').style.visibility = 'visible';
+	document.getElementById('idEnter').style.visibility = 'visible';
+	document.getElementById('idExit').style.visibility = 'hidden';
+	idUser = 0;
+	passUser = "";
 	nameUser = "";
 }
 
-function AddMessage(idSend, idRecip, textMessage)
+function AddMessage(idRecip, textMessage)
 {
 	if (flagUser == true)
 	{
 		var message = {
-			  IdMessage: `f${(~~(Math.random(s)*1e8)).toString(16)}`,
-			  IdSend: idSend,
+			  IdMessage: `f${(~~(Math.random()*1e8)).toString(16)}`,
+			  IdSend: idUser,
 			  IdRecip: idRecip,
 			  TextMessage: textMessage,
 			  Time: new Date,
