@@ -85,12 +85,12 @@ function AddMessage(idSend, idRecip, textMessage)
 	if (flagUser == true)
 	{
 		var message = {
+			  IdMessage: `f${(~~(Math.random(s)*1e8)).toString(16)}`,
 			  IdSend: idSend,
-			  NameSend: nameUser,
 			  IdRecip: idRecip,
 			  TextMessage: textMessage,
 			  Time: new Date,
-			  IsRead: false
+			  IsRead: 0
 			};
 		const options = {
 		  method: 'post',
