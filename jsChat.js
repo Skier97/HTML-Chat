@@ -10,7 +10,7 @@ function EnterTheOffice(id, pass)
 	document.getElementById('idUser').disabled = true;
 	document.getElementById('passUser').disabled = true;
 	document.getElementById('areaMessage').value = "";
-	fetch("https://localhost:44326/api/WebChat/IsUser?id=" + id + "&password=" + pass)
+	fetch("https://localhost:44326/api/WebChat/EnterUser?id=" + id + "&password=" + pass)
 		.then( resp => resp.json())
 		.then((data) => {
 			flagUser=true;
@@ -32,10 +32,11 @@ function EnterTheOffice(id, pass)
 			var outText = "<h3>Привет, " + data + "!</h3>";
 			var outElem = document.getElementById('enterHead');
 			outElem.innerHTML = outText;
-			document.getElementById('idUser').style.visibility = 'hidden';
-			document.getElementById('passUser').style.visibility = 'hidden';
-			document.getElementById('idEnter').style.visibility = 'hidden';
-			document.getElementById('idExit').style.visibility = 'visible';
+			document.getElementById('idUser').style.display = 'none';
+			document.getElementById('passUser').style.display = 'none';
+			document.getElementById('idEnter').style.display = 'none';
+			document.getElementById('idReg').style.display = 'none';
+			document.getElementById('idExit').style.display = 'inline';
 		})
 			
 }
@@ -46,7 +47,7 @@ function CheckNewMessage()
 	if (flagUser == true)
 	{
 		document.getElementById('areaMessage').value = "";
-		fetch("https://localhost:44326/api/WebChat/IsUser?id=" + idUser + "&password=" + passUser + "&flagUser=" + flagUser)
+		fetch("https://localhost:44326/api/WebChat/IsUser?id=" + idUser + "&password=" + passUser + "&flagEnterUser=" + flagUser)
 			.then(resp => resp.json())
 			.then((data) => {
 				for (let i=0; i<data.length; i++)
@@ -92,10 +93,11 @@ function ExitTheOffice()
 	var outText = "<h3>Вход в кабинет</h3>";
 	var outElem = document.getElementById('enterHead');
 	outElem.innerHTML = outText;
-	document.getElementById('idUser').style.visibility = 'visible';
-	document.getElementById('passUser').style.visibility = 'visible';
-	document.getElementById('idEnter').style.visibility = 'visible';
-	document.getElementById('idExit').style.visibility = 'hidden';
+	document.getElementById('idUser').style.display = 'inline';
+	document.getElementById('passUser').style.display = 'inline';
+	document.getElementById('idEnter').style.display = 'inline';
+	document.getElementById('idReg').style.display = 'inline';
+	document.getElementById('idExit').style.display = 'none';
 	idUser = 0;
 	passUser = "";
 	nameUser = "";
@@ -136,12 +138,82 @@ function AddMessage(idRecip, textMessage)
 function CheckValid()
 {
 	debugger;
-	if ((document.getElementById('idUser').value != "")&&(document.getElementById('passUser').value != ""))
+	if ((document.getElementById('idUser').value != "")&&(document.getElementById('passUser').value != "") && 
+		(document.getElementById('idName').style.display == 'none'))
 	{
 		document.getElementById('idEnter').removeAttribute("disabled");
 	}
-	else
+	else if ((document.getElementById('idUser').value != "")&&(document.getElementById('passUser').value != "") && 
+		(document.getElementById('idName').style.display == 'inline')&&(document.getElementById('idName').value != ""))
+	{
+		document.getElementById('idNewUser').removeAttribute("disabled");
+	}
+	else 
 	{
 		document.getElementById('idEnter').setAttribute("disabled", "true");
+		document.getElementById('idNewUser').setAttribute("disabled", "true");
 	}
+}
+
+function Registration()
+{
+	debugger;
+	var outText = "<h3>Регистрация</h3>";
+	var outElem = document.getElementById('enterHead');
+	outElem.innerHTML = outText;
+	let newIdUser;
+	document.getElementById('idName').style.display = 'inline';
+	document.getElementById('idNewUser').style.display = 'inline';
+	document.getElementById('idEnter').style.display = 'none';
+	document.getElementById('idReg').style.display = 'none';
+	
+	fetch("https://localhost:44326/api/WebChat/GetIdNewUser")
+			.then(resp => resp.json())
+			.then((data) => {document.getElementById('idUser').value = data})
+	// document.getElementById('idUser').value = newIdUser;
+	document.getElementById('idUser').setAttribute("disabled", "true");
+}
+
+function AddNewUser(id, name, password)
+{
+	debugger;
+	var user = {
+			  IdUser: id,
+			  NameUser: name,
+			  Password: password
+			};
+		const options = {
+		  method: 'post',
+		  headers: { "Content-type": "application/json" },
+		    body: JSON.stringify(user)
+		};
+		fetch('https://localhost:44326/api/WebChat/AddUser', options);
+		document.getElementById('idUser').value = "";
+		document.getElementById('idName').value = "";
+		document.getElementById('passUser').value = "";
+		var outText = "<h5>Новый пользователь добавлен!</h5>";
+		var outElem = document.getElementById('doneEnter');
+		outElem.innerHTML = outText;
+		document.getElementById('doneEnter').style.visibility = 'visible';
+		let i=4;
+		var timer = setInterval(function () {
+			i--;
+			
+			if (i == 0) {
+			    document.getElementById('doneEnter').style.visibility = 'hidden';
+			    outText = "<h5>Вход успешно выполнен!</h5>";
+				var outElem = document.getElementById('doneEnter');
+				outElem.innerHTML = outText;
+			    clearInterval(timer);
+			}
+		}, 1000)
+		
+		document.getElementById('idName').style.display = 'none';
+		document.getElementById('idNewUser').style.display = 'none';
+		document.getElementById('idEnter').style.display = 'inline';
+		document.getElementById('idReg').style.display = 'inline';
+		document.getElementById('idUser').removeAttribute("disabled");
+		var outText = "<h3>Вход в кабинет</h3>";
+		var outElem = document.getElementById('enterHead');
+		outElem.innerHTML = outText;
 }

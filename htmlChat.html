@@ -47,10 +47,13 @@
 							<form class="decor">
 							  <div class="form-inner">
 							  	<h3 id="enterHead">Вход в кабинет</h3>
-							    <input  type="text" placeholder="Id" id="idUser" onchange="CheckValid()">
-							    <input  type="password" placeholder="Пароль" id="passUser" onchange="CheckValid()">
-							    <input class = "enter" type="button" id="idEnter" value="Вход" onclick="EnterTheOffice(document.getElementById('idUser').value, document.getElementById('passUser').value)" disabled="true">
-							    <input type="button" value="Выйти" id = "idExit" style="visibility: hidden;" onclick="ExitTheOffice()">
+							    <input  type="text" placeholder="Id" id="idUser" onchange="CheckValid()" style="display: inline">
+							    <input  type="text" placeholder="Name" id="idName" onchange="CheckValid()" style="display: none">
+							    <input  type="password" placeholder="Пароль" id="passUser" onchange="CheckValid()" style="display: inline">
+							    <input class = "enter" type="button" id="idEnter" value="Вход" onclick="EnterTheOffice(document.getElementById('idUser').value, document.getElementById('passUser').value)" style="display: inline" disabled="true">
+							    <input type="button" id="idReg" value="Регистрация" onclick="Registration()" style="display: inline">
+							    <input type="button" id="idNewUser" value="Зарегистрироваться" onclick="AddNewUser(document.getElementById('idUser').value,document.getElementById('idName').value, document.getElementById('passUser').value)" style="display: none" disabled="true">
+							    <input type="button" value="Выйти" id = "idExit" style="display: none;" onclick="ExitTheOffice()">
 							    <h5 id = "doneEnter" style="visibility: hidden;">Вход успешно выполнен!</h5>
 							  </div>
 							</form>
